@@ -19,7 +19,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Recipes',
+            'Favorite',
             style: TextStyle(color: Color(0xff02947D), fontSize: 30),
           ),
           elevation: 0,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intermediate1/models/db_helper.dart';
 import '../models/details.dart';
 import '../network/api.dart';
+import '../models/favorite.dart';
 
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -37,6 +39,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     children: [
                       IconButton(
                           onPressed: () {
+                            if (fav == true) {
+                              DBHelper.instance.insertFav(Favorite(
+                                  id: snapshot.data!.id,
+                                  name: snapshot.data!.title,
+                                  image: snapshot.data!.image,
+                                  isFav: true));
+                            }
+                            else{
+                              DBHelper.instance.deleteTodo(snapshot.data!.id!);
+                            }
                             setState(() {
                               fav = !fav;
                             });

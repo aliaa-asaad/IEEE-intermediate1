@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intermediate1/screens/details_screen.dart';
 import 'package:intermediate1/screens/navigation_screen.dart';
 
-void main() {
+import 'models/db_helper.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await DBHelper.instance.createDatabase();
   runApp(const MyApp());
 }
 

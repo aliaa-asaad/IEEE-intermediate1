@@ -31,9 +31,12 @@ class DBHelper {
     fav.id = await db.insert(favTable, fav.toMap());
     return fav;
   }
+  Future<int> deleteTodo(int id) async {
+    return await db.delete(favTable, where: 'id = ?', whereArgs: [id]);
+  }
 
   Future<List<Favorite>> getAllFav() async {
-    List<Map<String, dynamic>> favMaps = await db!.query(favTable);
+    List<Map<String, dynamic>> favMaps = await db.query(favTable);
     if (favMaps.length == 0)
       return [];
     else {

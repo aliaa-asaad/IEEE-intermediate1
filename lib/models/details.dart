@@ -20,13 +20,9 @@ class Details {
   });
 
   Details.fromMap(Map<String, dynamic> map) {
-    print('a');
     analyzedInstructions = [];
-    print('b');
     ((map['analyzedInstructions']) as List<dynamic>).forEach((element) {
-      print('c');
       analyzedInstructions!.add(Instructions.fromMap(element));
-      print('d');
     });
     /* extendedIngredients = [];*/
     print('1');
@@ -36,13 +32,10 @@ class Details {
       print('3');
     });*/
     this.id = map['id'];
-    print('2');
     this.title = map['title'];
-    print('3');
     this.image = map['image'];
-    print('4');
     this.readyInMinutes = map['readyInMinutes'];
-    print('5');
+
   }
 
   Map<String, dynamic> toMap() {
@@ -50,10 +43,8 @@ class Details {
     extendedIngredients!.forEach((element) => ingredientsList.add(element.toMap()));*/
     print('6');
     List<Map> instructionsList = [];
-    print('7');
     analyzedInstructions!
         .forEach((element) => instructionsList.add(element.toMap()));
-    print('8');
     Map<String, dynamic> map = {
       'id': this.id,
       'title': this.title,
@@ -61,7 +52,6 @@ class Details {
       /*  'extendedIngredients':ingredientsList,*/
       'analyzedInstructions': instructionsList,
     };
-    print('9');
     return map;
   }
 }
