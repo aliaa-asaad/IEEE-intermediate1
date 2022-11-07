@@ -31,7 +31,7 @@ class DBHelper {
     fav.id = await db.insert(favTable, fav.toMap());
     return fav;
   }
-  Future<int> deleteTodo(int id) async {
+  Future<int> deleteFav(int id) async {
     return await db.delete(favTable, where: 'id = ?', whereArgs: [id]);
   }
 

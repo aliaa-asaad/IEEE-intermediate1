@@ -47,7 +47,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   isFav: true));
                             }
                             else{
-                              DBHelper.instance.deleteTodo(snapshot.data!.id!);
+                              DBHelper.instance.deleteFav(snapshot.data!.id!);
                             }
                             setState(() {
                               fav = !fav;
