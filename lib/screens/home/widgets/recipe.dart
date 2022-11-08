@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intermediate1/widgets/image.dart';
 
-class Recipes extends StatelessWidget {
+class RecipesCard extends StatelessWidget {
   final String? title;
   final int? id;
   final String? image;
 
-  Recipes(this.title, this.id, this.image);
+  RecipesCard(this.title, this.id, this.image);
 
   void selectCategory(BuildContext ctx) {
     Navigator.of(ctx).pushNamed('details', arguments: {'id': id});

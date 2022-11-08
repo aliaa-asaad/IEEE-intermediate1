@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intermediate1/models/db_helper.dart';
-import 'package:intermediate1/models/favorite.dart';
+import '../models/results.dart';
 import 'home/widgets/recipe.dart';
 
 class FavoriteScreen extends StatefulWidget {
@@ -11,7 +11,7 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  List<Favorite> favList = [];
+  List<Results> favList = [];
   bool fav = false;
 
   @override
@@ -36,15 +36,15 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         backgroundColor: Colors.white,
         body: Center(
             child: Container(
-                child: FutureBuilder<List<Favorite>>(
+                child: FutureBuilder<List<Results>>(
           future: DBHelper.instance.getAllFav(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(
-                  itemBuilder: (context, index) => Recipes(
-                      snapshot.data![index].name,
+                  itemBuilder: (context, index) => RecipesCard(
+                      snapshot.data![index].title,
                       snapshot.data![index].id,
                       snapshot.data![index].image),
                   itemCount: snapshot.data!.length,

@@ -35,7 +35,7 @@ class Home extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(
-                  itemBuilder: (context, index) => Recipes(
+                  itemBuilder: (context, index) => RecipesCard(
                       snapshot.data!.results![index].title,
                       snapshot.data!.results![index].id,
                       snapshot.data!.results![index].image),

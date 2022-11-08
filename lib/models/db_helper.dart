@@ -1,6 +1,6 @@
+import 'package:intermediate1/models/results.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:intermediate1/models/favorite.dart';
 
 final String favTable = 'favorite';
 
@@ -27,7 +27,7 @@ class DBHelper {
     return db;
   }
 
-  Future<Favorite> insertFav(Favorite fav) async {
+  Future<Results> insertFav(Results fav) async {
     fav.id = await db.insert(favTable, fav.toMap());
     return fav;
   }
@@ -35,14 +35,14 @@ class DBHelper {
     return await db.delete(favTable, where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<List<Favorite>> getAllFav() async {
+  Future<List<Results>> getAllFav() async {
     List<Map<String, dynamic>> favMaps = await db.query(favTable);
     if (favMaps.length == 0)
       return [];
     else {
-      List<Favorite> favs = [];
+      List<Results> favs = [];
       favMaps.forEach((element) {
-        favs.add(Favorite.fromMap(element));
+        favs.add(Results.fromMap(element));
       });
       return favs;
     }

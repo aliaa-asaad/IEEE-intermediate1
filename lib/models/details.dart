@@ -25,7 +25,6 @@ class Details {
       analyzedInstructions!.add(Instructions.fromMap(element));
     });
     /* extendedIngredients = [];*/
-    print('1');
     /* ((map['extendedIngredients']) as String).forEach((element) {
       print('2');
       extendedIngredients!.add(Ingredients.fromMap(element));
@@ -41,7 +40,6 @@ class Details {
   Map<String, dynamic> toMap() {
     /*List<Map> ingredientsList = [];
     extendedIngredients!.forEach((element) => ingredientsList.add(element.toMap()));*/
-    print('6');
     List<Map> instructionsList = [];
     analyzedInstructions!
         .forEach((element) => instructionsList.add(element.toMap()));

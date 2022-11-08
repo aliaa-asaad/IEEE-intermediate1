@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intermediate1/models/db_helper.dart';
 import '../models/details.dart';
+import '../models/results.dart';
 import '../network/api.dart';
-import '../models/favorite.dart';
 
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -12,8 +12,6 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  bool fav = false;
-
   @override
   Widget build(BuildContext context) {
     final mealId =
@@ -39,21 +37,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     children: [
                       IconButton(
                           onPressed: () {
-                            if (fav == true) {
-                              DBHelper.instance.insertFav(Favorite(
-                                  id: snapshot.data!.id,
-                                  name: snapshot.data!.title,
-                                  image: snapshot.data!.image,
-                                  isFav: true));
-                            }
-                            else{
+                            setState(() {
+                              Results().isFav = !(Results().isFav!);
+                            });
+                            if (Results().isFav == true) {
+                              DBHelper.instance.insertFav(Results(
+                                id: snapshot.data!.id,
+                                title: snapshot.data!.title,
+                                image: snapshot.data!.image,
+                              ));
+                            } else {
                               DBHelper.instance.deleteFav(snapshot.data!.id!);
                             }
-                            setState(() {
-                              fav = !fav;
-                            });
                           },
-                          icon: fav == false
+                          icon: Results().isFav == false
                               ? Icon(
                                   Icons.favorite_border,
                                   color: Colors.red,
