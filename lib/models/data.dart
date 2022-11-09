@@ -1,14 +1,15 @@
-import 'package:intermediate1/models/results.dart';
+
+import 'package:intermediate1/models/details.dart';
 
 class Data {
-  List<Results>? results;
+  List<Details>? results;
 
   Data({this.results});
 
   Data.fromMap(Map<String, dynamic> map) {
     results = [];
     ((map['results']) as List<dynamic>).forEach((element) {
-      results!.add(Results.fromMap(element));
+      results!.add(Details.fromMap(element));
     });
   }
 

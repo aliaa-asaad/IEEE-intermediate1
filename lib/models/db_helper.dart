@@ -1,4 +1,4 @@
-import 'package:intermediate1/models/results.dart';
+import 'package:intermediate1/models/details.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -18,16 +18,16 @@ class DBHelper {
     db = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute('create table $favTable'
-          ' (id integer primary key autoincrement,'
-          'name text not null,'
-          'image text not null,'
-          'isFav integer not null)');
+          ' (id INTEGER primary key autoincrement,'
+          'name TEXT ,'
+          'image TEXT ,'
+          'isFav BOOLEAN )');
       print("Created");
     });
     return db;
   }
 
-  Future<Results> insertFav(Results fav) async {
+  Future<Details> insertFav(Details fav) async {
     fav.id = await db.insert(favTable, fav.toMap());
     return fav;
   }
@@ -35,14 +35,14 @@ class DBHelper {
     return await db.delete(favTable, where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<List<Results>> getAllFav() async {
+  Future<List<Details>> getAllFav() async {
     List<Map<String, dynamic>> favMaps = await db.query(favTable);
     if (favMaps.length == 0)
       return [];
     else {
-      List<Results> favs = [];
+      List<Details> favs = [];
       favMaps.forEach((element) {
-        favs.add(Results.fromMap(element));
+        favs.add(Details.fromMap(element));
       });
       return favs;
     }

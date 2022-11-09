@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intermediate1/models/db_helper.dart';
 import '../models/details.dart';
-import '../models/results.dart';
 import '../network/api.dart';
 
 class DetailsScreen extends StatefulWidget {
@@ -15,7 +14,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final mealId =
-        ModalRoute.of(context)!.settings.arguments as Map<String, int?>;
+    ModalRoute.of(context)!.settings.arguments as Map<String, int?>;
     return FutureBuilder<Details>(
       future: API().getDetails(mealId['id'].toString()),
       builder: (context, snapshot) {
@@ -38,10 +37,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       IconButton(
                           onPressed: () {
                             setState(() {
-                              Results().isFav = !(Results().isFav!);
+                              snapshot.data!.isFav = !(snapshot.data!.isFav!);
                             });
-                            if (Results().isFav == true) {
-                              DBHelper.instance.insertFav(Results(
+                            if (snapshot.data!.isFav == true) {
+                              DBHelper.instance.insertFav(Details(
                                 id: snapshot.data!.id,
                                 title: snapshot.data!.title,
                                 image: snapshot.data!.image,
@@ -50,15 +49,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               DBHelper.instance.deleteFav(snapshot.data!.id!);
                             }
                           },
-                          icon: Results().isFav == false
+                          icon: snapshot.data!.isFav == false
                               ? Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.red,
-                                )
+                            Icons.favorite_border,
+                            color: Colors.red,
+                          )
                               : Icon(
-                                  Icons.favorite,
-                                  color: Colors.red,
-                                )),
+                            Icons.favorite,
+                            color: Colors.red,
+                          )),
                       Icon(
                         Icons.play_arrow_outlined,
                         color: Colors.black,
@@ -85,98 +84,127 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
             backgroundColor: Colors.white,
             body: SafeArea(
-              child: Column(
-                children: [
-                  //image
-                  Container(
-                    height: 300,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(snapshot.data!.image!),
-                    )),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  //-------------------------------------
-                  Padding(
-                    padding: EdgeInsets.all(15),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            snapshot.data!.title!,
-                            style: TextStyle(
-                                color: Color(0xff02947D),
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          //icons
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.schedule,
-                                    size: 40,
-                                    color: Color(0xff02947D),
-                                  ),
-                                  Text(
-                                    '${snapshot.data!.readyInMinutes} min',
-                                    style: TextStyle(fontSize: 15),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          //-------------------------------------
-
-                          //cards
-                          /*  CustomCard(
-                              list: snapshot.data!.extendedIngredients!, text: 'Integrations'),*/
-                          Text(
-                            'Steps',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 26,
-                              color: Color(0xff02947D),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    //image
+                    Container(
+                      height: 300,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(snapshot.data!.image!),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    //-------------------------------------
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              snapshot.data!.title!,
+                              style: TextStyle(
+                                  color: Color(0xff02947D),
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            height: 200,
-                            width: MediaQuery.of(context).size.width,
-                            child: ListView.separated(
-                              separatorBuilder: (ctx, index) => SizedBox(
-                                height: 2,
+                            //icons
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.schedule,
+                                      size: 40,
+                                      color: Color(0xff02947D),
+                                    ),
+                                    Text(
+                                      '${snapshot.data!.readyInMinutes} min',
+                                      style: TextStyle(fontSize: 15),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            //-------------------------------------
+                            Text(
+                              'Ingredients',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 26,
+                                color: Color(0xff02947D),
                               ),
-                              itemCount:
-                                  snapshot.data!.analyzedInstructions!.length,
-                              itemBuilder: (ctx, index) => Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Text(
-                                  '${snapshot.data!.analyzedInstructions![index].steps![index].step}',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 15),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              height: 200,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.separated(
+                                separatorBuilder: (ctx, index) => SizedBox(
+                                  height: 2,
+                                ),
+                                itemCount:
+                                snapshot.data!.extendedIngredients!.length,
+                                itemBuilder: (ctx, index) => Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Text(
+                                    '${snapshot.data!.extendedIngredients![index].original}',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 15),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                            //-------------------------------------
+                            //cards
+                            Text(
+                              'Steps',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 26,
+                                color: Color(0xff02947D),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              height: 200,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.separated(
+                                separatorBuilder: (ctx, index) => SizedBox(
+                                  height: 2,
+                                ),
+                                itemCount:
+                                snapshot.data!.analyzedInstructions!.length,
+                                itemBuilder: (ctx, index) => Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Text(
+                                    '${snapshot.data!.analyzedInstructions![index].steps![index].step}',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 15),
+                                  ),
+                                ),
+                              ),
+                            ),
 
-                          //-------------------------------------
-                        ],
+                            //-------------------------------
+
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
