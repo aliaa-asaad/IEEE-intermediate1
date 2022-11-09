@@ -176,6 +176,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 color: Color(0xff02947D),
                               ),
                             ),
+
                             Container(
                               padding: EdgeInsets.all(10),
                               height: 200,
